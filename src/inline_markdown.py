@@ -1,4 +1,5 @@
 import re
+
 from textnode import TextNode, TextType
 
 
@@ -80,6 +81,23 @@ def split_nodes_link(old_nodes):
         if original_text != "":
             new_nodes.append(TextNode(original_text, TextType.TEXT))
     return new_nodes
+
+def text_to_textnodes(text):
+    new_node = [TextNode(text, TextType.TEXT)]
+    dictionary = {
+        "**":TextType.BOLD,
+        "`":TextType.CODE,
+        "_":TextType.ITALIC,
+        }
+    for key in dictionary:
+        new_node =split_nodes_delimiter(new_node,key,dictionary[key])
+    new_node =split_nodes_image(new_node)
+    new_node =split_nodes_link(new_node)
+    
+
+    return new_node
+
+
 
 
 
